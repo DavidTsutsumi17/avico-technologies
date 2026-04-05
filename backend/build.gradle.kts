@@ -3,81 +3,42 @@ plugins {
     id("io.quarkus")
 }
 
+val quarkusPlatformGroupId: String by project
+val quarkusPlatformArtifactId: String by project
+val quarkusPlatformVersion: String by project
+
+group = "com.avico"
+version = "1.0.0-SNAPSHOT"
+
 repositories {
     mavenCentral()
     mavenLocal()
 }
 
-val quarkusPlatformGroupId: String by project
-val quarkusPlatformArtifactId: String by project
-val quarkusPlatformVersion: String by project
-
 dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
+
     implementation("io.quarkus:quarkus-arc")
-    testImplementation("io.quarkus:quarkus-junit")
-    plugins {
-        java
-        id("io.quarkus")
-    }
 
-    repositories {
-        mavenCentral()
-        mavenLocal()
-    }
+    implementation("io.quarkus:quarkus-rest")
+    implementation("io.quarkus:quarkus-rest-jackson")
 
-    val quarkusPlatformGroupId: String by project
-    val quarkusPlatformArtifactId: String by project
-    val quarkusPlatformVersion: String by project
+    implementation("io.quarkus:quarkus-hibernate-orm-panache")
+    implementation("io.quarkus:quarkus-jdbc-postgresql")
 
-    dependencies {
-        implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
+    implementation("io.quarkus:quarkus-hibernate-validator")
 
-        // Núcleo
-        implementation("io.quarkus:quarkus-arc")
+    implementation("io.quarkus:quarkus-smallrye-jwt")
+    implementation("io.quarkus:quarkus-smallrye-jwt-build")
 
-        // REST
-        implementation("io.quarkus:quarkus-rest")
-        implementation("io.quarkus:quarkus-rest-jackson")
+    implementation("io.quarkus:quarkus-scheduler")
 
-        // Base de datos
-        implementation("io.quarkus:quarkus-hibernate-orm-panache")
-        implementation("io.quarkus:quarkus-jdbc-postgresql")
+    implementation("io.quarkus:quarkus-rest-client")
+    implementation("io.quarkus:quarkus-rest-client-jackson")
 
-        // Validaciones
-        implementation("io.quarkus:quarkus-hibernate-validator")
-
-        // Seguridad JWT
-        implementation("io.quarkus:quarkus-smallrye-jwt")
-        implementation("io.quarkus:quarkus-smallrye-jwt-build")
-
-        // Scheduler (sincronización con Syscom)
-        implementation("io.quarkus:quarkus-scheduler")
-
-        // Cliente HTTP (para consumir API de Syscom)
-        implementation("io.quarkus:quarkus-rest-client")
-        implementation("io.quarkus:quarkus-rest-client-jackson")
-
-        // Tests
-        testImplementation("io.quarkus:quarkus-junit5")
-        testImplementation("io.rest-assured:rest-assured")
-    }
-
-    group = "com.avico"
-    version = "1.0.0-SNAPSHOT"
-
-    java {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    tasks.withType<JavaCompile> {
-        options.encoding = "UTF-8"
-        options.compilerArgs.add("-parameters")
-    }
-
-group = "com.avico"
-version = "1.0.0-SNAPSHOT"
+    testImplementation("io.quarkus:quarkus-junit5")
+    testImplementation("io.rest-assured:rest-assured")
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
