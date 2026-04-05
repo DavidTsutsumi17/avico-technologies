@@ -1,3 +1,7 @@
+import org.gradle.api.tasks.testing.TestDescriptor
+import org.gradle.api.tasks.testing.TestListener
+import org.gradle.api.tasks.testing.TestResult
+
 plugins {
     java
     id("io.quarkus")
@@ -48,4 +52,29 @@ java {
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
     options.compilerArgs.add("-parameters")
+}
+
+tasks.test {
+    testLogging {
+        events("failed", "skipped")
+    }
+
+    addTestListener(object : TestListener {
+        override fun beforeSuite(suite: TestDescriptor) = Unit
+
+        override fun beforeTest(testDescriptor: TestDescriptor) = Unit
+
+        override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) = Unit
+
+        override fun afterSuite(suite: TestDescriptor, result: TestResult) {
+            if (suite.parent == null) {
+                println(
+                    "Test summary: ${result.resultType} | " +
+                            "passed: ${result.successfulTestCount}, " +
+                            "failed: ${result.failedTestCount}, " +
+                            "skipped: ${result.skippedTestCount}"
+                )
+            }
+        }
+    })
 }
