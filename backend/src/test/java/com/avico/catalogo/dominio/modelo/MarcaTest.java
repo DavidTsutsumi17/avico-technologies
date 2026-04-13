@@ -1,4 +1,4 @@
-package com.avico.catalogo.dominio.model;
+package com.avico.catalogo.dominio.modelo;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
