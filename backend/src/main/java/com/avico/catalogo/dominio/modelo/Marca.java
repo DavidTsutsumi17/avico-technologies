@@ -1,4 +1,4 @@
-package com.avico.catalogo.dominio.model;
+package com.avico.catalogo.dominio.modelo;
 
 import java.util.Objects;
 
